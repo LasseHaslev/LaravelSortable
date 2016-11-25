@@ -26,9 +26,9 @@ trait Sortable
      *
      * @return Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSorted($query)
+    public function scopeSorted($query, $type = 'ASC')
     {
-        return $query->orderBy( $this->sortingColumnName );
+        return $query->orderBy( $this->sortingColumnName, $type );
     }
 
 }

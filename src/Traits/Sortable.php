@@ -8,4 +8,16 @@ namespace LasseHaslev\LaravelSortable\Traits;
  */
 trait Sortable
 {
+
+    protected $sortingColumnName = 'order';
+
+    /**
+     * Getter for sortingColumnName
+     *
+     * @return string
+     */
+    public function getSortingColumnName()
+    {
+        return $this->sortingColumnName;
+    }
 }

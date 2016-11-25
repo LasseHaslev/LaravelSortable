@@ -25,6 +25,10 @@ class SortableTraitsTest extends TestCase
     {
         parent::setUp();
         $this->objectOne = factory( TestObject::class )->create();
+        $this->objectTwo = factory( TestObject::class )->create();
+        $this->objectThree = factory( TestObject::class )->create();
+        $this->objectFour = factory( TestObject::class )->create();
+        $this->objectFive = factory( TestObject::class )->create();
     }
 
 
@@ -36,10 +40,13 @@ class SortableTraitsTest extends TestCase
 
     /** @test */
     public function has_property_for_what_object_that_should_be_sorted() {
+        $this->assertEquals( 'order', $this->objectOne->getSortingColumnName() );
     }
 
     /** @test */
     public function user_can_change_name_of_column_to_order() {
+        $otherSortingColumnNameObject = CustomSortingColumnNameClass::create();
+        $this->assertEquals( 'position', $otherSortingColumnNameObject->getSortingColumnName() );
     }
 
     /** @test */

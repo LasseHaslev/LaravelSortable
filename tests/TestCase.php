@@ -1,8 +1,12 @@
 <?php
 
 class TestObject extends Illuminate\Database\Eloquent\Model {
-    protected $table = 'test_objects';
     use LasseHaslev\LaravelSortable\Traits\Sortable;
+    protected $table = 'test_objects';
+}
+
+class CustomSortingColumnNameClass extends TestObject {
+    protected $sortingColumnName = 'position';
 }
 
 /**

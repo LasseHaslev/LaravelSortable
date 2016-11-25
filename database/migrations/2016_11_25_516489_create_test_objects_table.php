@@ -15,7 +15,8 @@ class CreateTestObjectsTable extends Migration
         Schema::create('test_objects', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer( 'order' );
+            $table->integer( 'order' )
+                ->default( 0 );
 
             $table->timestamps();
         });

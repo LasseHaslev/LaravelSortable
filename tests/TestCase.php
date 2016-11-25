@@ -1,5 +1,9 @@
 <?php
 
+class TestObject extends Illuminate\Database\Eloquent\Model {
+    use LasseHaslev\LaravelSortable\Traits\Sortable;
+}
+
 /**
  * Class TestCase
  * @author Lasse S. Haslev

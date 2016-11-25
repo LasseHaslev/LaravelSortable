@@ -31,4 +31,5 @@ class CreateTestObjectsTable extends Migration
     {
         Schema::drop('test_objects');
     }
+
 }

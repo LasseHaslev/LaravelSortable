@@ -15,6 +15,6 @@
 $factory->define( TestObject::class, function (Faker\Generator $faker)
 {
     return [
-        'order'=>$faker->numberBetween( 0,10 ),
+        'order'=>$faker->numberBetween( 0,9 ),
     ];
 } );

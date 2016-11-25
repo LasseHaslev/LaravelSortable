@@ -50,6 +50,25 @@ class SortableTraitsTest extends TestCase
     }
 
     /** @test */
+    public function can_get_collection_of_objects_sorted_by_sorting_column_name() {
+        $isSorted = true;
+        $lastOrder = 0;
+        $objects = TestObject::sorted()->get()->each( function ($model) use ( $isSorted, $lastOrder )
+        {
+
+            echo $model->order;
+            if ($model->order < $lastOrder) {
+                $isSorted = false;
+                return false;
+            }
+
+            $lastOrder = $model->id;
+
+        } );
+        $this->assertEquals( true, $isSorted, 'The sorted scope without parameters does not sort to increasing order' );
+    }
+
+    /** @test */
     public function is_setting_order_when_creating_new_object_object() {
         // $this->assertEquals( 0, $this->objectOne->order );
         // $this->assertEquals( 1, $this->objectTwo->order );

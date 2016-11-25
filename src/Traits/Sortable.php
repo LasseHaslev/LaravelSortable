@@ -20,4 +20,15 @@ trait Sortable
     {
         return $this->sortingColumnName;
     }
+
+    /**
+     * Sort object based on the sortingColumnName
+     *
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSorted($query)
+    {
+        return $query->orderBy( $this->sortingColumnName );
+    }
+
 }

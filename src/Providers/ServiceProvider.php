@@ -28,6 +28,5 @@ class ServiceProvider extends BaseServiceProvider
         $this->publishes([
             __DIR__.'/../../config/sortable.php'=>'sortable',
         ]);
-        $this->loadMigrationsFrom( __DIR__.'/../../database/migrations' );
     }
 }

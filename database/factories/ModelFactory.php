@@ -12,4 +12,9 @@
 | Check out https://laravel.com/docs/5.3/database-testing#writing-factories for any questions
 */
 
-
+$factory->define( TestObject::class, function (Faker\Generator $faker)
+{
+    return [
+        'order'=>$faker->numberBetween( 0,10 ),
+    ];
+} );

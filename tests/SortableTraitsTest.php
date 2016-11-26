@@ -24,11 +24,11 @@ class SortableTraitsTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->objectOne = factory( TestObject::class )->create();
-        $this->objectTwo = factory( TestObject::class )->create();
-        $this->objectThree = factory( TestObject::class )->create();
-        $this->objectFour = factory( TestObject::class )->create();
-        $this->objectFive = factory( TestObject::class )->create();
+        $this->objectOne = factory( TestObject::class )->create( [ 'order'=>0 ] );
+        $this->objectTwo = factory( TestObject::class )->create([ 'order'=>1 ]);
+        $this->objectThree = factory( TestObject::class )->create([ 'order'=>2 ]);
+        $this->objectFour = factory( TestObject::class )->create([ 'order'=>3 ]);
+        $this->objectFive = factory( TestObject::class )->create([ 'order'=>4 ]);
     }
 
 
@@ -108,97 +108,54 @@ class SortableTraitsTest extends TestCase
     }
 
     /** @test */
-    public function can_check_if_the_order_has_diverged_from_original() {
-
-        // $this->assertNotTrue( $this->objectTwo->orderDiverged() );
-
-        // $this->objectTwo->moveTo( 0 );
-        // $this->assertTrue( $this->objectTwo->orderDiverged() );
-
+    public function can_move_to_position() {
+        $moveToPosition = 0;
+        TestObject::moveTo( $this->objectTwo, $moveToPosition );
+        $this->assertEquals( $moveToPosition, $this->objectTwo->order );
     }
 
     /** @test */
-    public function can_move_to_position() {
+    public function is_changing_all_other_in_between_position_when_decreasing() {
+        $moveToPosition = 0;
+        TestObject::moveTo( $this->objectThree, $moveToPosition );
 
-        // $this->objectOne->moveTo( 2 );
+        $this->reloadModels();
 
-        // $this->reloadModels();
-
-        // // Check
-        // $this->assertEquals( 2, $this->objectOne->order );
-        // $this->assertEquals( 0, $this->objectTwo->order );
-        // $this->assertEquals( 1, $this->objectThree->order );
-        // $this->assertEquals( 3, $this->objectFour->order );
-
-        // $this->objectOne->moveTo( 1 );
-        // $this->reloadModels();
-
-        // // Check
-        // $this->assertEquals( 1, $this->objectOne->order );
-        // $this->assertEquals( 0, $this->objectTwo->order );
-        // $this->assertEquals( 2, $this->objectThree->order );
-        // $this->assertEquals( 3, $this->objectFour->order );
-
+        $this->assertEquals( 1, $this->objectOne->order );
+        $this->assertEquals( 2, $this->objectTwo->order );
+        $this->assertEquals( 0, $this->objectThree->order );
+        $this->assertEquals( 3, $this->objectFour->order );
+        $this->assertEquals( 4, $this->objectFive->order );
     }
+
+    /** @test */
+    // public function is_changing_all_other_in_between_position_when_increasing() {
+        // $moveToPosition = 3;
+        // TestObject::moveTo( $this->objectThree, $moveToPosition );
+
+        // $this->reloadModels();
+
+        // $this->assertEquals( 0, $this->objectOne->order );
+        // $this->assertEquals( 1, $this->objectTwo->order );
+        // $this->assertEquals( 3, $this->objectThree->order );
+        // $this->assertEquals( 2, $this->objectFour->order );
+        // $this->assertEquals( 4, $this->objectFive->order );
+    // }
 
     /** @test */
     public function can_increase_positon_by_one() {
-        // $this->objectOne->moveUp()
-            // ->save();
-        // $this->reloadModels();
-
-        // // Check
-        // $this->assertEquals( 1, $this->objectOne->order );
-        // $this->assertEquals( 0, $this->objectTwo->order );
-        // $this->assertEquals( 2, $this->objectThree->order );
-        // $this->assertEquals( 3, $this->objectFour->order );
     }
 
     /** @test */
     public function can_decrease_positon_by_one() {
-        // $this->objectTwo->moveDown()
-            // ->save();
-
-        // $this->reloadModels();
-
-        // // Check
-        // $this->assertEquals( 1, $this->objectOne->order );
-        // $this->assertEquals( 0, $this->objectTwo->order );
-        // $this->assertEquals( 2, $this->objectThree->order );
-        // $this->assertEquals( 3, $this->objectFour->order );
     }
 
     /** @test */
     public function order_cannot_go_below_zero() {
-        // $this->objectOne->moveDown()
-            // ->save();
-
-        // $this->reloadModels();
-        // $this->assertEquals( 0, $this->objectOne->order );
-
-        // $this->objectTwo->moveTo(-1)
-            // ->save();
-
-        // $this->reloadModels();
-        // $this->assertEquals( 0, $this->objectTwo->order );
     }
 
     /** @test */
     public function order_cannot_go_above_max_numbers() {
-        // $this->objectFour->moveUp()
-            // ->save();
-
-        // $this->reloadModels();
-        // $this->assertEquals( 3, $this->objectFour->order );
-
-        // $this->objectTwo->moveTo(10)
-            // ->save();
-
-        // $this->reloadModels();
-        // $this->assertEquals( 0, $this->objectOne->order );
-        // $this->assertEquals( 3, $this->objectTwo->order );
-        // $this->assertEquals( 1, $this->objectThree->order );
-        // $this->assertEquals( 2, $this->objectFour->order );
     }
 
     protected function reloadModels() {

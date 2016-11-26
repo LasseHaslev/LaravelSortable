@@ -26,6 +26,7 @@ trait Sortable
         return $position - $this->order;
     }
 
+
     /**
      * Sort object based on the sortingColumnName
      *
@@ -42,8 +43,18 @@ trait Sortable
      *
      * @return void
      */
-    public function moveTo( $position )
+    public function scopeMoveTo( $query, $object, $position )
     {
+
+        $sortingColumnName = $object->getSortingColumnName();
+        $query->where( $sortingColumnName, '<', $object->$sortingColumnName )
+            ->increment( $sortingColumnName );
+
+        $object->$sortingColumnName = $position;
+        $object->save();
+
+        return $query;
+
         // $columnName = $this->getSortingColumnName();
         // $this->$columnName = $position;
         // $this->save();

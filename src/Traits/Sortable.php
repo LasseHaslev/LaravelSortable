@@ -21,6 +21,11 @@ trait Sortable
         return $this->sortingColumnName;
     }
 
+    /** @test */
+    public function orderDifference( $position ) {
+        return $position - $this->order;
+    }
+
     /**
      * Sort object based on the sortingColumnName
      *
@@ -30,5 +35,19 @@ trait Sortable
     {
         return $query->orderBy( $this->sortingColumnName, $type );
     }
+
+    /**
+     * Move object to new position
+     *
+     *
+     * @return void
+     */
+    public function moveTo( $position )
+    {
+        // $columnName = $this->getSortingColumnName();
+        // $this->$columnName = $position;
+        // $this->save();
+    }
+
 
 }

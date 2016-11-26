@@ -96,14 +96,14 @@ class SortableTraitsTest extends TestCase
     /** @test */
     public function can_get_order_diferenceial() {
 
-        // $this->objectTwo->moveTo( 0 );
-        // $this->assertEquals( -1, $this->objectTwo->orderDifference() );
+        $this->objectTwo->order = 1;
+        $this->objectTwo->save();
 
-        // $this->objectTwo->moveTo( 1 );
-        // $this->assertEquals( 0, $this->objectTwo->orderDifference() );
+        $this->assertEquals( -1, $this->objectTwo->orderDifference( 0 ) );
 
-        // $this->objectTwo->moveTo( 2 );
-        // $this->assertEquals( 1, $this->objectTwo->orderDifference() );
+        $this->assertEquals( 0, $this->objectTwo->orderDifference( 1 ) );
+
+        $this->assertEquals( 1, $this->objectTwo->orderDifference( 2 ) );
 
     }
 
@@ -120,8 +120,7 @@ class SortableTraitsTest extends TestCase
     /** @test */
     public function can_move_to_position() {
 
-        // $this->objectOne->moveTo( 2 )
-            // ->save();
+        // $this->objectOne->moveTo( 2 );
 
         // $this->reloadModels();
 
@@ -131,8 +130,7 @@ class SortableTraitsTest extends TestCase
         // $this->assertEquals( 1, $this->objectThree->order );
         // $this->assertEquals( 3, $this->objectFour->order );
 
-        // $this->objectOne->moveTo( 1 )
-            // ->save();
+        // $this->objectOne->moveTo( 1 );
         // $this->reloadModels();
 
         // // Check

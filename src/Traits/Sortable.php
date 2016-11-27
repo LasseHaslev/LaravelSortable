@@ -47,8 +47,17 @@ trait Sortable
     {
 
         $sortingColumnName = $object->getSortingColumnName();
-        $query->where( $sortingColumnName, '<', $object->$sortingColumnName )
-            ->increment( $sortingColumnName );
+        if ($object->order > $position) {
+            $query->where( $sortingColumnName, '>=', $position )
+                ->where( $sortingColumnName, '<', $object->order )
+                ->increment( $sortingColumnName );
+        }
+        else {
+            $query->where( $sortingColumnName, '>', $object->order )
+                ->where( $sortingColumnName, '<=', $position )
+                ->decrement( $sortingColumnName );
+        }
+
 
         $object->$sortingColumnName = $position;
         $object->save();

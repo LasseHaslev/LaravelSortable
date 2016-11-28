@@ -46,6 +46,14 @@ trait Sortable
     public function scopeMoveTo( $query, $object, $position )
     {
 
+        $max = $query->count() -1;
+        if ( $position <= 0 ) {
+            $position = 0;
+        }
+        else if ( $position >= $max ) {
+            $position = $max;
+        }
+
         $sortingColumnName = $object->getSortingColumnName();
         if ($object->order > $position) {
             $query->where( $sortingColumnName, '>=', $position )

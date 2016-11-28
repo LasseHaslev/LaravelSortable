@@ -143,8 +143,33 @@ class SortableTraitsTest extends TestCase
     }
 
     /** @test */
-    public function is_only_changing_order_on_elements_in_scope() {
+    public function order_cannot_go_below_zero() {
+        TestObject::moveTo( $this->objectTwo, -1 );
 
+        $this->reloadModels();
+
+        $this->assertEquals( 1, $this->objectOne->order );
+        $this->assertEquals( 0, $this->objectTwo->order );
+        $this->assertEquals( 2, $this->objectThree->order );
+        $this->assertEquals( 3, $this->objectFour->order );
+        $this->assertEquals( 4, $this->objectFive->order );
+    }
+
+    /** @test */
+    public function order_cannot_go_above_max_numbers() {
+        TestObject::moveTo( $this->objectTwo, 10 );
+
+        $this->reloadModels();
+
+        $this->assertEquals( 0, $this->objectOne->order );
+        $this->assertEquals( 4, $this->objectTwo->order );
+        $this->assertEquals( 1, $this->objectThree->order );
+        $this->assertEquals( 2, $this->objectFour->order );
+        $this->assertEquals( 3, $this->objectFive->order );
+    }
+
+    /** @test */
+    public function is_only_changing_order_on_elements_in_scope() {
     }
 
     /** @test */
@@ -162,14 +187,6 @@ class SortableTraitsTest extends TestCase
 
     /** @test */
     public function can_decrease_positon_by_one() {
-    }
-
-    /** @test */
-    public function order_cannot_go_below_zero() {
-    }
-
-    /** @test */
-    public function order_cannot_go_above_max_numbers() {
     }
 
     protected function reloadModels() {

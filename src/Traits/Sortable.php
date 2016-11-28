@@ -46,24 +46,14 @@ trait Sortable
     public function scopeMoveTo( $query, $object, $position )
     {
 
-        $max = $query->count() -1;
-        if ( $position <= 0 ) {
-            $position = 0;
-        }
-        else if ( $position >= $max ) {
-            $position = $max;
-        }
+        $position = $this->clampValue($query, $position);
 
         $sortingColumnName = $object->getSortingColumnName();
-        if ($object->order > $position) {
-            $query->where( $sortingColumnName, '>=', $position )
-                ->where( $sortingColumnName, '<', $object->order )
-                ->increment( $sortingColumnName );
+        if ($this->isIncreasingOrder( $object, $position )) {
+            $this->incrementOthers($query, $sortingColumnName, $position, $object);
         }
         else {
-            $query->where( $sortingColumnName, '>', $object->order )
-                ->where( $sortingColumnName, '<=', $position )
-                ->decrement( $sortingColumnName );
+            $this->decrementOthers($query, $sortingColumnName, $object, $position);
         }
 
 
@@ -75,6 +65,39 @@ trait Sortable
         // $columnName = $this->getSortingColumnName();
         // $this->$columnName = $position;
         // $this->save();
+    }
+
+    protected function decrementOthers($query, $sortingColumnName, $object, $position)
+    {
+        $query->where( $sortingColumnName, '>', $object->order )
+            ->where( $sortingColumnName, '<=', $position )
+            ->decrement( $sortingColumnName );
+        return array($query, $sortingColumnName, $object, $position);
+    }
+
+    protected function incrementOthers($query, $sortingColumnName, $position, $object)
+    {
+        $query->where( $sortingColumnName, '>=', $position )
+            ->where( $sortingColumnName, '<', $object->order )
+            ->increment( $sortingColumnName );
+        return array($query, $sortingColumnName, $position, $object);
+    }
+
+    protected function isIncreasingOrder( $object, $position )
+    {
+        return $object->order > $position;
+    }
+
+    protected function clampValue($query, $position)
+    {
+        $max = $query->count() -1;
+        if ( $position <= 0 ) {
+            $position = 0;
+        }
+        else if ( $position >= $max ) {
+            $position = $max;
+        }
+        return $position;
     }
 
 

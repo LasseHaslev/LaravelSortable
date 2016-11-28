@@ -144,6 +144,7 @@ class SortableTraitsTest extends TestCase
 
     /** @test */
     public function is_only_changing_order_on_elements_in_scope() {
+
     }
 
     /** @test */

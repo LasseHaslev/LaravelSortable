@@ -198,6 +198,31 @@ class SortableTraitsTest extends TestCase
         $this->assertEquals( 4, $this->objectFive->order );
     }
 
+    /** @test */
+    public function can_move_to_front() {
+        TestObject::moveToFront( $this->objectThree );
+
+        $this->reloadModels();
+
+        $this->assertEquals( 1, $this->objectOne->order );
+        $this->assertEquals( 2, $this->objectTwo->order );
+        $this->assertEquals( 0, $this->objectThree->order );
+        $this->assertEquals( 3, $this->objectFour->order );
+        $this->assertEquals( 4, $this->objectFive->order );
+    }
+    /** @test */
+    public function can_move_to_back() {
+        TestObject::moveToBack( $this->objectThree );
+
+        $this->reloadModels();
+
+        $this->assertEquals( 0, $this->objectOne->order );
+        $this->assertEquals( 1, $this->objectTwo->order );
+        $this->assertEquals( 4, $this->objectThree->order );
+        $this->assertEquals( 2, $this->objectFour->order );
+        $this->assertEquals( 3, $this->objectFive->order );
+    }
+
     protected function reloadModels() {
         $this->objectOne = $this->objectOne->fresh();
         $this->objectTwo = $this->objectTwo->fresh();

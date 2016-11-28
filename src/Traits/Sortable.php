@@ -59,6 +59,21 @@ trait Sortable
         return $this->scopeMoveTo( $query, $object, $object->$sortingColumnName -1 );
     }
 
+    public function scopeMoveToFront( $query, $object ) {
+        return $this->scopeMoveTo( $query, $object, 0 );
+    }
+
+    /**
+     * Move object to back position
+     *
+     * @return void
+     */
+    public function scopeMoveToBack($query, $object)
+    {
+        return $this->scopeMoveTo( $query, $object, $query->count() );
+    }
+
+
 
     /**
      * Move object to new position

@@ -38,6 +38,29 @@ trait Sortable
     }
 
     /**
+     * Increment position by one
+     *
+     * @return QueryBuilder
+     */
+    public function scopeIncrementPosition( $query, $object )
+    {
+        $sortingColumnName = $object->getSortingColumnName();
+        return $this->scopeMoveTo( $query, $object, $object->$sortingColumnName +1 );
+    }
+
+    /**
+     * Decrement position by one
+     *
+     * @return QueryBuilder
+     */
+    public function scopeDecrementPosition( $query, $object )
+    {
+        $sortingColumnName = $object->getSortingColumnName();
+        return $this->scopeMoveTo( $query, $object, $object->$sortingColumnName -1 );
+    }
+
+
+    /**
      * Move object to new position
      *
      *

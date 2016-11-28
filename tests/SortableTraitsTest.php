@@ -174,19 +174,28 @@ class SortableTraitsTest extends TestCase
 
     /** @test */
     public function can_increase_positon_by_one() {
-        // TestObject::moveUp( $this->objectThree );
+        TestObject::incrementPosition( $this->objectThree );
 
-        // $this->reloadModels();
+        $this->reloadModels();
 
-        // $this->assertEquals( 0, $this->objectOne->order );
-        // $this->assertEquals( 1, $this->objectTwo->order );
-        // $this->assertEquals( 2, $this->objectThree->order );
-        // $this->assertEquals( 3, $this->objectFour->order );
-        // $this->assertEquals( 4, $this->objectFive->order );
+        $this->assertEquals( 0, $this->objectOne->order );
+        $this->assertEquals( 1, $this->objectTwo->order );
+        $this->assertEquals( 3, $this->objectThree->order );
+        $this->assertEquals( 2, $this->objectFour->order );
+        $this->assertEquals( 4, $this->objectFive->order );
     }
 
     /** @test */
     public function can_decrease_positon_by_one() {
+        TestObject::decrementPosition( $this->objectThree );
+
+        $this->reloadModels();
+
+        $this->assertEquals( 0, $this->objectOne->order );
+        $this->assertEquals( 2, $this->objectTwo->order );
+        $this->assertEquals( 1, $this->objectThree->order );
+        $this->assertEquals( 3, $this->objectFour->order );
+        $this->assertEquals( 4, $this->objectFive->order );
     }
 
     protected function reloadModels() {
